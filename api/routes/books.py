@@ -54,7 +54,7 @@ async def get_book(book_id: int) ->  Book:
     books = db.get_books()
     if book_id not in books:
         raise HTTPException(status_code=404, detail="Book not found")
-    return db.get_book(book_id)
+    return db.get_book(status_code=status.HTTP_402_PAYMENT_REQUIRED, book_id)
 
 
 
