@@ -1,13 +1,12 @@
 name: Deploy
 
 on:
-  pull_request:
+  push:
     types: [closed]
     branches: [main]
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -16,22 +15,19 @@ jobs:
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
-        python-version: '3.10'
+        python-version: 3.11
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
+      
     - name: deploy
       run: |
          ssh -i "fastapi_key.pem" ubuntu@ec2-13-60-92-192.eu-north-1.compute.amazonaws.com
-          cd /path/to/your/app
+          cd fastapi-book-project
           git pull origin main
+          python3 -m venv venv
           source venv/bin/activate
-          pip install -r requirements.txt
           sudo systemctl restart nginx
-          
-    
-        # Add your deployment commands here, for example:
-        # ssh user@server "cd /path/to/app && git pull && systemctl restart app"
+          python3 -m uvicorn main:app
