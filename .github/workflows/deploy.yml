@@ -20,5 +20,5 @@ jobs:
           git pull origin main
           python3 -m venv venv
           source venv/bin/activate
-          sudo systemctl restart nginx
+          sudo systemctl restart fastapi
           python3 -m uvicorn main:app
