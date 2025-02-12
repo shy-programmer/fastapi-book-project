@@ -9,17 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ssh deployment
-    - uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.KEY }}
-        script: |
-          cd fastapi-book-project
-          git pull origin main
-          python3 -m venv venv
-          source venv/bin/activate
-          sudo systemctl restart fastapi
-          python3 -m uvicorn main:app
-
+      - name: ssh deployment
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            cd fastapi-book-project
+            git pull origin main
+            python3 -m venv venv
+            source venv/bin/activate
+            sudo systemctl restart fastapi
