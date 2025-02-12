@@ -22,3 +22,4 @@ jobs:
           source venv/bin/activate
           sudo systemctl restart fastapi
           python3 -m uvicorn main:app
+
