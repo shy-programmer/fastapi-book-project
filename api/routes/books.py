@@ -54,7 +54,7 @@ async def get_book(book_id: int) ->  Book:
     books = db.get_books()
     if book_id not in books:
         return JSONResponse(
-            
+            status_code=status.HTTP_404_NOT_FOUND,
             content={"detail": "Book not found"},
         )
     return db.get_book(book_id)
