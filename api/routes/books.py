@@ -47,6 +47,7 @@ async def create_book(book: Book):
 async def get_books() -> OrderedDict[int, Book]:
     return db.get_books()
 
+
 # adding new route
 @router.get(
     "/{book_id}", response_model=Book)
