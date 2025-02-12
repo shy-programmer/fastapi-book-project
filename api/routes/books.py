@@ -47,15 +47,21 @@ async def create_book(book: Book):
 async def get_books() -> OrderedDict[int, Book]:
     return db.get_books()
 
-# adding new route
+# adding new route...
 @router.get(
     "/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def get_book(book_id: int) ->  Book:
-    book = db.get_book(book_id)
-    if not book:
-        raise HTTPException(status_code=404, detail="Book not found")
-    return book
-
+    book_data = db.get_book(book_id)
+    if book_data:
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=book_data.model_dump()
+        )
+    else:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"detail": "Book not found"},
+        )
 
 
 @router.put("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
