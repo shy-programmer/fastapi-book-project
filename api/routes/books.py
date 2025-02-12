@@ -49,12 +49,12 @@ async def get_books() -> OrderedDict[int, Book]:
 
 # adding new route
 @router.get(
-    "/{book_id}", response_model=Book)
+    "/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def get_book(book_id: int) ->  Book:
-    books = db.get_books()
-    if book_id not in books:
+    book = db.get_book(book_id)
+    if not book:
         raise HTTPException(status_code=404, detail="Book not found")
-    return db.get_book(book_id)
+    return book
 
 
 
